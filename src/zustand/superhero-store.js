@@ -1,20 +1,18 @@
 import create from "zustand";
-import axios from "axios";
+import apiCall from "./api";
 
 const superheroStore = create((set) => ({
   isFetchingSuperheroes: false,
   fetchSuperheroesError: undefined,
   superheroes: [],
-  fetchSuperheroes: async () => {
+  fetchSuperheroes: async (searchText) => {
     try {
       set({
         fetchSuperheroesError: undefined,
         superheroes: [],
         isFetchingSuperheroes: true,
       });
-      const { data } = await axios.get(
-        `https://superheroapi.com/api.php/10223232565340348/search/${searchText}`
-      );
+      const { data } = await apiCall.get(`/search/${searchText}`);
       set({ superheroes: data?.results });
     } catch (error) {
       set({ fetchSuperheroesError: error });

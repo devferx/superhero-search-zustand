@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+import useSuperheroStore from "../../zustand/superhero-store";
+
 import ErrorComponent from "./components/ErrorComponent";
 import ResultsList from "./components/ResultsList";
 import NoResults from "./components/NoResults";
@@ -9,18 +11,31 @@ import Spinner from "../../components/Spinner";
 
 export default function Results() {
   const { searchText } = useParams();
+  const {
+    fetchSuperheroes,
+    isFetchingSuperheroes,
+    fetchSuperheroesError,
+    superheroes,
+  } = useSuperheroStore((state) => ({
+    fetchSuperheroes: state.fetchSuperheroes,
+    isFetchingSuperheroes: state.isFetchingSuperheroes,
+    fetchSuperheroesError: state.fetchSuperheroesError,
+    superheroes: state.superheroes,
+  }));
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetchSuperheroes(searchText);
+  }, []);
 
   return (
     <div>
       <Header />
       <div className="px-3 pb-2 mt-12">
         <h2 className="text-xl font-bold">Resultados para: {searchText}</h2>
-        {isLoading && <Spinner />}
-        <ErrorComponent error={error} />
-        <ResultsList data={results} />
-        {!isLoading && !results?.length && <NoResults />}
+        {isFetchingSuperheroes && <Spinner />}
+        <ErrorComponent error={fetchSuperheroesError} />
+        <ResultsList data={superheroes} />
+        {!isFetchingSuperheroes && !superheroes?.length && <NoResults />}
       </div>
     </div>
   );
