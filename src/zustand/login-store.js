@@ -1,12 +1,13 @@
 import create from "zustand";
 
 const loginStore = create((set) => ({
-  isSubmiting: false,
+  isSubmitting: false,
   successSubmitted: false,
   errorSubmitting: undefined,
   submitLogin: (name, email) => {
     try {
-      set({ isSubmiting: true });
+      set({ isSubmitting: true });
+
       localStorage.setItem("@superhero-isAuth", "true");
       localStorage.setItem(
         "@superhero-data",
@@ -15,12 +16,13 @@ const loginStore = create((set) => ({
           email,
         })
       );
-      set({ isSubmiting: false, successSubmitted: true });
+
+      set({ isSubmitting: false, successSubmitted: true });
     } catch (error) {
       set({
         successSubmitted: false,
         errorSubmitting: error,
-        isSubmiting: false,
+        isSubmitting: false,
       });
     }
   },
