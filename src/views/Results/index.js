@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+
 import ErrorComponent from "./components/ErrorComponent";
 import ResultsList from "./components/ResultsList";
 import NoResults from "./components/NoResults";
@@ -9,31 +9,8 @@ import Spinner from "../../components/Spinner";
 
 export default function Results() {
   const { searchText } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
-  const [results, setResults] = useState([]);
-  const [error, setError] = useState();
-  const fetchResultsRef = useRef();
 
-  const fetchResults = useCallback(async () => {
-    try {
-      setError();
-      setResults([]);
-
-      const { data } = await axios.get(`https://superheroapi.com/api.php/10223232565340348/search/${searchText}`);
-
-      setResults(data?.results);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [setError, setResults, setIsLoading, searchText]);
-
-  fetchResultsRef.current = fetchResults;
-
-  useEffect(() => {
-    fetchResultsRef.current()?.catch(null);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div>
