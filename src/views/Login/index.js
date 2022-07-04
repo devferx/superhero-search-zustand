@@ -34,6 +34,7 @@ export default function Login() {
     if (successSubmitted && !isSubmitting) {
       history.push("/search");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successSubmitted, isSubmitting]);
 
   useEffect(() => {
