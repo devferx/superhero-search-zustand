@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import shallow from "zustand/shallow";
 
 import useSuperheroStore from "../../zustand/superhero-store";
 
@@ -16,12 +17,15 @@ export default function Results() {
     isFetchingSuperheroes,
     fetchSuperheroesError,
     superheroes,
-  } = useSuperheroStore((state) => ({
-    fetchSuperheroes: state.fetchSuperheroes,
-    isFetchingSuperheroes: state.isFetchingSuperheroes,
-    fetchSuperheroesError: state.fetchSuperheroesError,
-    superheroes: state.superheroes,
-  }));
+  } = useSuperheroStore(
+    (state) => ({
+      fetchSuperheroes: state.fetchSuperheroes,
+      isFetchingSuperheroes: state.isFetchingSuperheroes,
+      fetchSuperheroesError: state.fetchSuperheroesError,
+      superheroes: state.superheroes,
+    }),
+    shallow
+  );
 
   useEffect(() => {
     fetchSuperheroes(searchText);
