@@ -29,6 +29,7 @@ export default function Results() {
 
   useEffect(() => {
     fetchSuperheroes(searchText);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
